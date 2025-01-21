@@ -67,8 +67,6 @@ s3_configs:
     s3_force_destroy: true
 
   s3_bucket_1:
-
-
     s3_name_suffix: "code-crunch"
     s3_block_public_acls: true
     s3_block_public_policy: false
