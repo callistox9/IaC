@@ -57,9 +57,6 @@ s3_configs:
           Action: "s3:GetObject"
           Resource: "BUCKET_ARN_PLACEHOLDER/*"
 
-
-
-
     s3_index_document: "index.html"
     s3_error_document: "error.html"
     object_ownership: "BucketOwnerEnforced"
