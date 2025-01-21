@@ -1,0 +1,124 @@
+## Dependency-1 >> Deploy S3 bucket
+## Dependency-2 >> Deploy Cloudfront distribution
+## Dependency-3 >> Deploy S3 bucket to update coors rulesn for Cloudfront and bucket policy for Cloudfront
+
+global:
+  tags:
+    service: "eb-backend"
+    Name: "eb-backend"
+    Environment: "dev"
+    Owner: "backend-team"
+    engineering-org: "backend"
+
+s3_configs:
+  s3_bucket_0:
+    s3_name_suffix: "effibuild-website"
+    s3_block_public_acls: true
+    s3_block_public_policy: false
+    ignore_public_acls: true
+    restrict_public_buckets: true
+    
+    cors_rule:
+      - allowed_headers: ["*"]
+        allowed_methods: ["GET", "HEAD", "POST", "PUT", "DELETE"]
+        allowed_origins: 
+          - "https://codecrunch.dev.effibuild.co"
+          - "https://d2ijt1shxoe57x.cloudfront.net"
+        expose_headers: ["ETag"]
+        max_age_seconds: 3000
+
+# s3_server_side_encryption_configuration:
+#   rule:
+#     apply_server_side_encryption_by_default:
+#       sse_algorithm: "aws:kms"
+#        kms_key_alias: "effibuild/s3"
+
+    enable_lifecycle_rules: false
+    lifecycle_rules: {} 
+      # - id: "expire-old-versions"
+      #   enabled: true
+      #   filter:
+      #     prefix: ""  
+      #   expiration:
+      #     days: 365  
+      #   noncurrent_version_expiration:
+      #     days: 90  
+
+    bucket_policy:
+      Version: "2008-10-17"
+      Statement:
+        - Sid: "PublicReadGetObject"
+          Effect: "Allow"
+          Principal: "*"
+          Action: "s3:GetObject"
+          Resource: "BUCKET_ARN_PLACEHOLDER/*"
+        - Effect: "Allow"
+          Principal: "*"
+          Action: "s3:GetObject"
+          Resource: "BUCKET_ARN_PLACEHOLDER/*"
+
+
+
+
+    s3_index_document: "index.html"
+    s3_error_document: "error.html"
+    object_ownership: "BucketOwnerEnforced"
+    s3_versioning: false
+    s3_force_destroy: true
+
+  s3_bucket_1:
+
+
+    s3_name_suffix: "code-crunch"
+    s3_block_public_acls: true
+    s3_block_public_policy: false
+    ignore_public_acls: true
+    restrict_public_buckets: true
+    
+    cors_rule:
+      - allowed_headers: ["*"]
+        allowed_methods: ["GET", "HEAD", "POST", "PUT", "DELETE"]
+        allowed_origins:
+          - "https://d2w6na3zl44t0l.cloudfront.net"
+          - "https://d2ijt1shxoe57x.cloudfront.net"
+        expose_headers: ["ETag"]
+        max_age_seconds: 3000
+ 
+  # To enable customer managed KMS
+
+# s3_server_side_encryption_configuration:
+#   rule:
+#     apply_server_side_encryption_by_default:
+#       sse_algorithm: "aws:kms"
+#        kms_key_alias: "effibuild/s3"
+
+    enable_lifecycle_rules: false
+    lifecycle_rules: {} 
+      # - id: "expire-old-versions"
+      #   enabled: true
+      #   filter:
+      #     prefix: ""  
+      #   expiration:
+      #     days: 365  
+      #   noncurrent_version_expiration:
+      #     days: 90  
+
+    bucket_policy:
+      Version: "2008-10-17"
+      Statement:
+        - Sid: "PublicReadGetObject"
+          Effect: "Allow"
+          Principal: "*"
+          Action: "s3:GetObject"
+          Resource: "BUCKET_ARN_PLACEHOLDER/*"
+        - Effect: "Allow"
+          Principal: "*"
+          Action: "s3:GetObject"
+          Resource: "BUCKET_ARN_PLACEHOLDER/*"
+
+
+    s3_index_document: "index.html"
+    s3_error_document: "error.html"
+    object_ownership: "BucketOwnerEnforced"
+    s3_versioning: false
+    s3_force_destroy: true
