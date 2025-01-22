@@ -32,21 +32,6 @@ output "s3_bucket_id" {
     for k, v in module.s3-bucket : k => v.s3_bucket_id
   }
 }
-
-# output "s3_bucket_lifecycle_configuration_rules" {
-#   description = "The lifecycle rules of the S3 bucket"
-#   value = {
-#     for k, v in module.s3-bucket : k => v.s3_bucket_lifecycle_configuration_rules
-#   }
-# }
-
-# output "s3_bucket_policy" {
-#   description = "The bucket policy"
-#   value = {
-#     for k, v in module.s3-bucket : k => v.s3_bucket_policy
-#   }
-# }
-
 output "s3_bucket_region" {
   description = "The AWS region where the S3 bucket resides"
   value = {
